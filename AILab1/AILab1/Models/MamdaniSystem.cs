@@ -11,17 +11,17 @@ namespace AILab1.Models
         Fuzzy stuff_bad(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 0f);
-            return Fuzzy.Triangle(staff, -0.01f, 0f, 10f);
+            return Fuzzy.Triangle(staff, -0.01f, 0f, 3.33f);
         }
         Fuzzy stuff_good(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 5f);
-            return Fuzzy.Triangle(staff, 10f, 15f, 20f);
+            return Fuzzy.Triangle(staff, 3.33f, 5f, 6.66f);
         }
         Fuzzy stuff_awesome(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 10f);
-            return Fuzzy.Triangle(staff, 20f, 30f, 40f);
+            return Fuzzy.Triangle(staff, 6.66f, 10f, 11f);
         }
 
         Fuzzy food_bad(float food)
