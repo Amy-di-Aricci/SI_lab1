@@ -16,7 +16,7 @@ namespace AILab1.Models
         Fuzzy stuff_good(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 5f);
-            return Fuzzy.Triangle(staff, 10f, 1f5, 20f);
+            return Fuzzy.Triangle(staff, 10f, 15f, 20f);
         }
         Fuzzy stuff_awesome(float staff)
         {
@@ -61,7 +61,7 @@ namespace AILab1.Models
             float uppersum = 0;
             float lowersum = 0;
 
-            for (double i = 0; i <= 30; i += 0.05)
+            for (double i = 0; i <= 30; i += 0.001)
             {
                 float j = (float)i;
                 if (i >= 0 && i < 10)
@@ -76,8 +76,8 @@ namespace AILab1.Models
                 }
                 else
                 {
-                    uppersum = calculateValue(outputs[2], j, 29.97f, 29.98f, 29.99f) * j + uppersum;
-                    lowersum = calculateValue(outputs[2], j, 29.97f, 29.98f, 29.99f) + lowersum;
+                    uppersum = calculateValue(outputs[2], j, 29.99f, 30f, 30.01f) * j + uppersum;
+                    lowersum = calculateValue(outputs[2], j, 29.99f, 30f, 30.01f) + lowersum;
                 }
             }
 

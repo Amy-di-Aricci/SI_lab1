@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using AILab1.Pages;
 
 namespace AILab1
 {
@@ -13,8 +14,9 @@ namespace AILab1
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new AILab1.MainPage());
-		}
+			//MainPage = new NavigationPage(new AILab1.MainPage());
+            MainPage = new NavigationPage(new TipPage());
+        }
 
 		protected override void OnStart ()
 		{

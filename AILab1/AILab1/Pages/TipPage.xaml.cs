@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AILab1.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace AILab1.Pages
 	{
 		public TipPage ()
 		{
+            BindingContext = new TipViewModel();
 			InitializeComponent ();
 		}
 	}
