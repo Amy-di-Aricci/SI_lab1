@@ -57,7 +57,6 @@ namespace AILab1.ViewModels
                 {
                     output = value;
                     OnPropertyChanged("Output");
-                    Calculate();
                 }
             }
             get
