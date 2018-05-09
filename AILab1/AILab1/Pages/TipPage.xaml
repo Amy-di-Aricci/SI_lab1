@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AILab1.Pages.TipPage">
+             x:Class="AILab1.Pages.TipPage" Title="Przyznaj napiwek">
     <ContentPage.Content>
-        <StackLayout Padding="10, 0">
+        <StackLayout Padding="30, 0">
 
-            <Label Text="{Binding Output, StringFormat='Wyjście = {0:F2}'}"
-               HorizontalOptions="Center" />
-            <Label Text="{Binding Staff, StringFormat='Staff = {0:F2}'}"
-               HorizontalOptions="Center" />
-            <Slider Value="{Binding Staff
-                
-                , Mode=TwoWay}" Maximum="10" Minimum="0"/>
+            <Label Text="{Binding Output, StringFormat='Napiwek = {0:F2} %'}"
+               HorizontalOptions="Center" FontSize="Large"/>
+            <Label Text="{Binding Staff, StringFormat='Obsługa = {0:F2}'}"
+               HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+            <Slider Value="{Binding Staff, Mode=TwoWay}" Maximum="10" Minimum="0"/>
 
-            <Label Text="{Binding Food, StringFormat='Food = {0:F2}'}"
+            <Label Text="{Binding Food, StringFormat='Jedzenie = {0:F2}'}"
                HorizontalOptions="Center" />
             <Slider Value="{Binding Food, Mode=TwoWay}"  Maximum="10" Minimum="0"/>
+            <Label Text="Obsługa: 0 - słaba, 10 - wspaniała; Jedzenie: 0 - zepsute, 10 - wyborne" FontSize="Small"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

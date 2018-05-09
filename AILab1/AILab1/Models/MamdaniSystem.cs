@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-
+ 
 namespace AILab1.Models
 {
     class MamdaniSystem
@@ -11,42 +11,42 @@ namespace AILab1.Models
         Fuzzy stuff_bad(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 0f);
-            return Fuzzy.Triangle(staff, -0.01f, 0f, 3.33f);
+            return Fuzzy.Triangle(staff, -0.01f, 0f, 5f);
         }
         Fuzzy stuff_good(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 5f);
-            return Fuzzy.Triangle(staff, 3.33f, 5f, 6.66f);
+            return Fuzzy.Triangle(staff, 1f, 5f, 9f);
         }
         Fuzzy stuff_awesome(float staff)
         {
             //return Fuzzy.Gaussian(staff, 1.5f, 10f);
-            return Fuzzy.Triangle(staff, 6.66f, 10f, 11f);
+            return Fuzzy.Triangle(staff, 5f, 10f, 10.1f);
         }
 
         Fuzzy food_bad(float food)
         {
             return Fuzzy.Trapezoid(food, -2f, 0f, 1f, 3f);
         }
-
+ 
         Fuzzy food_good(float food)
         {
             return Fuzzy.Trapezoid(food, 7f, 9f, 10f, 12f);
         }
-
+ 
         public float ProcessRules(float staff, float food)
         {
             float[] inputs = new float[5];
             //float[] rules = new float[5];
             float[] outputs = new float[3];
-
+ 
             inputs[0] = stuff_bad(staff).X;
             inputs[1] = stuff_good(staff).X;
             inputs[2] = stuff_awesome(staff).X;
             inputs[3] = food_bad(food).X;
             inputs[4] = food_good(food).X;
-
-
+ 
+ 
             //if staff is bad then tip is small
             Debug.WriteLine(String.Format("Debug: {0} {1}", staff, food));
             //rules[0] = triangleSurface(stuff_bad(staff).X, 0f, 5f, 10f);
@@ -57,11 +57,14 @@ namespace AILab1.Models
             outputs[0] = Math.Max(inputs[0], inputs[3]);
             outputs[1] = inputs[1];
             outputs[2] = Math.Max(inputs[2], inputs[4]);
+ 
+            float uppersum = 0.0001f;
+            float lowersum = 0.0001f;
 
-            float uppersum = 0;
-            float lowersum = 0;
+            double step = 0.001;
 
-            for (double i = 0; i <= 30; i += 0.001)
+
+            for (double i = 0; i <= 30; i += 0.005)
             {
                 float j = (float)i;
                 if (i >= 0 && i < 10)
@@ -71,8 +74,8 @@ namespace AILab1.Models
                 }
                 else if (i >= 10 && i < 20)
                 {
-                    uppersum = calculateValue(outputs[1], j, 10f, 15f, 20f) * j + uppersum;
-                    lowersum = calculateValue(outputs[1], j, 10f, 15f, 20f) + lowersum;
+                    uppersum = calculateValue(outputs[1], j, 14.9f, 15f, 15.1f) * j + uppersum;
+                    lowersum = calculateValue(outputs[1], j, 14.9f, 15f, 15.1f) + lowersum;
                 }
                 else
                 {
@@ -81,16 +84,38 @@ namespace AILab1.Models
                 }
             }
 
-            float final_output = uppersum / lowersum;
 
+            /*for (double i = 0; i < 30; i += step)
+            {
+                float j = (float)i;
+                if (i >= 0 && i < 10)
+                {
+                    uppersum = (float) step * (calculateValue(outputs[0], (j + (float)step/2), -0.01f, 0f, 0.01f) * (j + (float)step / 2)) + uppersum;
+                    lowersum = (float) step * (calculateValue(outputs[0], (j + (float)step / 2), -0.01f, 0f, 0.01f)) + lowersum;
+                }
+                else if (i >= 10 && i < 20)
+                {
+                    uppersum = (float)step * (calculateValue(outputs[1], (j + (float)step / 2), 0f, 15f, 30f) * (j + (float)step / 2)) + uppersum;
+                    lowersum = (float)step * (calculateValue(outputs[1], (j + (float)step / 2), 0f, 15f, 30f)) + lowersum;
+                }
+                else
+                {
+                    uppersum = (float)step * (calculateValue(outputs[2], (j + (float)step / 2), 29.99f, 30f, 30.01f) * (j + (float)step / 2)) + uppersum;
+                    lowersum = (float)step * (calculateValue(outputs[2], (j + (float)step / 2), 29.99f, 30f, 30.01f)) + lowersum;
+                }
+            }*/
+
+            float final_output = uppersum / lowersum;
+ 
             Debug.WriteLine(String.Format("{0} {1} {2} {3} {4}", inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]));
+            Debug.WriteLine(String.Format("{0} {1} {2}", outputs[0], outputs[1], outputs[2]));
             //Debug.WriteLine(String.Format("{0} {1} {2} {3} {4}", rules[0], rules[1], rules[2], rules[3], rules[4]));
 
             //return Math.Max(rules[0], rules[3]) + rules[1] + Math.Max(rules[2], rules[4]);
             //return (rules[0]- rules[3]) + rules[1] + (rules[2] - rules[4]);
             return final_output;
         }
-
+ 
         private float calculateValue(float max, float x, float a, float b, float c)
         {
             if (Fuzzy.Triangle(x, a, b, c).X > max)
@@ -99,7 +124,7 @@ namespace AILab1.Models
             }
             return Fuzzy.Triangle(x, a, b, c).X;
         }
-
+ 
         //private float triangleSurface(float input, float a, float b, float c)
         //{
         //    if(input == 1.0f)
@@ -112,7 +137,7 @@ namespace AILab1.Models
         //    Debug.WriteLine(String.Format("IN: {0} {1} {2}", input, d, e));
         //    return 0.5f * ((c - a) + (e - d)) * input;
         //}
-
+ 
         //private float traingleBisect(float input, float a, float b, float c, float st, float en)
         //{
         //    var intervalBegin = st;
